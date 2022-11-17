@@ -1,7 +1,8 @@
 
 def sum_list(lista):
-    if lista == None:
-        return None
+    for item in lista:
+        if lista == None:
+            return None
     else:
         result = 0
         for item in lista:
