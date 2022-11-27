@@ -18,6 +18,29 @@ class CSVFile():
         my_file.close()
         return values    
 
-#csvfile=CSVfile('shampo_sales.csv')
+class NumericalCSVFile(CSVFile):
+
+    def get_data(self):
+        result = []
+        lista=super().get_data()
+        for element in lista:
+            try:
+               result = float(element[1])
+            except Exception as e:
+                if len(element[1])==0:
+                    print('Errore, non ci sono valori')
+            except ValueError:
+                if element[1] == 'ciao':
+                    print('Errore non posso convertire "Ciao" a nuemro')
+        return result            
+            
+        
+        
+        
+        
+    
+    
+
+#csvfile=NumericalCSVFile('shampo_sales.csv')
 #data=csvfile.get_data()
 #print(data)
