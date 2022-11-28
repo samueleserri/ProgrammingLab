@@ -21,25 +21,28 @@ class CSVFile():
 class NumericalCSVFile(CSVFile):
 
     def get_data(self):
-        result = []
         lista=super().get_data()
+        result = []
+        for item in lista:
+            n_colonne=len(item)
+        lunghezza_file=len(lista)    
         for element in lista:
-            try:
-               result = float(element[1])
-            except Exception as e:
-                if len(element[1])==0:
-                    print('Errore, non ci sono valori')
-            except ValueError:
-                if element[1] == 'ciao':
-                    print('Errore non posso convertire "Ciao" a nuemro')
-        return result            
+            for i in range(n_colonne):
+                if i > 0:
+                    try:
+                        result.append(float(element[i]))
+                    except ValueError:
+                        print('Error')
+                    except Exception as e:
+                        print('Error')
+               
+
+
+        return result          
             
         
         
         
-        
-    
-    
 
 #csvfile=NumericalCSVFile('shampo_sales.csv')
 #data=csvfile.get_data()
