@@ -24,26 +24,24 @@ class NumericalCSVFile(CSVFile):
         lista=super().get_data()
         result = []
         for item in lista:
-            n_colonne=len(item)
-        lunghezza_file=len(lista)    
-        for element in lista:
-            for i in range(n_colonne):
-                if i > 0:
+            lista_numerica=[]
+            for i, element in enumerate(item):
+                if i ==0:
+                    lista_numerica.append(element)
+                else:
                     try:
-                        result.append(float(element[i]))
-                    except ValueError:
-                        print('Error')
+                        lista_numerica.append(float(element))
                     except Exception as e:
-                        print('Error')
-               
-
-
+                        print('Errore in conversione del valore "{}" a numerico: "{}"'.format(element, e))
+                        break
+            if len(lista_numerica)==len(item):
+                result.append(lista_numerica)
         return result          
             
         
         
         
 
-#csvfile=NumericalCSVFile('shampo_sales.csv')
-#data=csvfile.get_data()
-#print(data)
+csvfile=NumericalCSVFile('shampo_sales.csv')
+data=csvfile.get_data()
+print(data)
