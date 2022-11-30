@@ -42,6 +42,6 @@ class NumericalCSVFile(CSVFile):
         
         
 
-csvfile=NumericalCSVFile('shampo_sales.csv')
-data=csvfile.get_data()
-print(data)
+#csvfile=NumericalCSVFile('shampo_sales.csv')
+#data=csvfile.get_data()
+#print(data)
