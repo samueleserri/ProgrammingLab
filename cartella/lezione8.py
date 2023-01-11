@@ -31,3 +31,40 @@ def check_input(lista):
         return False
     else:
         return True
+
+
+#funzione che calcola l'incremento medio
+def incremento_medio(lista):
+    if lista == []:
+        raise Exception('lista vuota')
+        return None
+    numero_elementi=(len(lista))-1
+    incremento=0
+    prev_element=None
+    for item in lista:
+        if prev_element!=None:
+            incremento=incremento+(item-prev_element)
+        prev_element=item
+    return incremento/numero_elementi
+    
+
+class FitIncrementModel(IncrementModel):
+    def fit(self, data):
+        self.incremento_medio=incremento_medio(data)
+        super().predict()
+            
+        
+
+    
+
+    
+
+    
+        
+
+#test dell'incremento medio
+def test_incrementomedio():
+    if incremento_medio([50, 52, 60])!=5:
+        raise Exception('C è un errore nel calcolo dell incremento medio')
+
+test_incrementomedio()
