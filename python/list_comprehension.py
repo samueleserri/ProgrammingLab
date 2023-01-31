@@ -1,6 +1,20 @@
-def aumenta_di_c(c, vettore):
-    return [vettore[i]+c for i in range(len(vettore))]
+class Rettangolo:
+    def __init__(self, base, lunghezza):
+        self.base=base
+        self.lunghezza=lunghezza
+    def area(self):
+        return self.base*self.lunghezza
 
-x = int(input('inserire c: '))
-vettore=[1, 3, 4, 5, 6, 7]
-print(aumenta_di_c(x, vettore))
+
+class Parallelepipedo(Rettangolo):
+    def __init__(self, base, lunghezza, altezza):
+        super().__init__(base, lunghezza)
+        self.altezza=altezza
+    def Volume(self):
+        return (super().area()*self.altezza)
+        
+
+parallelpipedo=Parallelepipedo(5,5,5)
+print(parallelpipedo.Volume())
+print(parallelpipedo.area())
+    

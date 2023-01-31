@@ -1,14 +1,23 @@
+from random import randint
+def Bubble_sort(a):
+    print(a)
+    c=0
+    swapped = True
+    while swapped:
+        print(c)
+        c+=1
+        swapped = False
+        i = 1
+        while i < len(a):
+            
+            if a[i-1]<a[i]:
+                tmp=a[i-1]
+                a[i-1]=a[i]
+                a[i]=tmp
+                swapped=True
+            i=i+1
+    print(a)           
+    return a
 
-def sum_list(lista):
-    for item in lista:
-        if lista == None:
-            return None
-    else:
-        result = 0
-        for item in lista:
-            result=result+item
-        return result
-
-lista = []
-test=sum_list(lista)
-print('risultato: {}'.format(test))
+list = Bubble_sort([random.randinit() for i in range(35)])
+print(list)
