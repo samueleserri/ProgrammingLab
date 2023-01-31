@@ -57,7 +57,8 @@ class CSVTimeSeriesFile(CSVFile):
         #return di una lista di liste con i valori convertiti
         return result   
 
-
+    
+    
 
 def liste_giornaliere(time_series):
     #questa lista contiene altre liste che contengono le temperature relative ad un singolo giorno
@@ -76,8 +77,10 @@ def liste_giornaliere(time_series):
             lista.append(day)
             day = []
             curr_day+=86400
+    #aggiungo i valori dell'ultimo giorno
+    lista.append(day)
+            
     
-    print(lista)
     return lista
 
  
