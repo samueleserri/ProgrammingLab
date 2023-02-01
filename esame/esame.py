@@ -4,8 +4,6 @@ class ExamException(Exception):
 class CSVFile:
 
     def __init__(self, name):
-        if type(name) != str:
-            raise ExamException()
         self.name = name
 
     
@@ -96,28 +94,27 @@ def liste_giornaliere(time_series):
     return result
     
 def compute_daily_max_difference(time_series):
+    if type(time_series) != list:
+        raise ExamException('compute_daily_max_difference prende in input una lista')
     if time_series == []:
         return None
     listegiornaliere = liste_giornaliere(time_series)
     escursioni_termiche = []
     for item in listegiornaliere:
-        if len(item) == 1:
+        if len(item) <= 1:
             escursioni_termiche.append(None)
         else:
             escursioni_termiche.append(abs(max(item)-min(item)))
     return escursioni_termiche
     
-
-
-
 def start_day(epoch):
     return epoch - (epoch % 86400)  
 
-
-#_______________TEST_______________________________#
 def test_start_day():
+#test calcolo giorno di inizio
     if start_day(1553932800) != 1553904000:
         raise Exception('errore nel calcolo inizio del giorno')
+test_start_day()
  
 
 
@@ -125,10 +122,9 @@ def test_start_day():
     
 
 
-test=CSVTimeSeriesFile('data.csv')
+test=CSVTimeSeriesFile(name='data.csv')
 time_series = test.get_data()
-#print(time_series)
-print(compute_daily_max_difference(time_series))
+compute_daily_max_difference(time_series)
 
 
 
