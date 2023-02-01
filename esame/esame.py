@@ -4,7 +4,9 @@ class ExamException(Exception):
 class CSVFile:
 
     def __init__(self, name):
-            self.name = name
+        if type(name) != str:
+            raise ExamException()
+        self.name = name
 
     
     def get_data(self):
@@ -13,7 +15,7 @@ class CSVFile:
             #provo ad aprire il file
             my_file=open(self.name, 'r')
         except:
-            print('Errore, inserire un file')
+            ExamException('Errore, inserire un file')
         try:
             #verifico che il file sia leggibile
             my_file.readline()
@@ -30,6 +32,9 @@ class CSVFile:
         return values
 
 class CSVTimeSeriesFile(CSVFile):
+
+    def __init__(self, name):
+        super().__init__(name)
     
     
     def get_data(self):
@@ -55,46 +60,53 @@ class CSVTimeSeriesFile(CSVFile):
                 if len(lista_numerica)==len(item):
                     result.append(lista_numerica)
         #return di una lista di liste con i valori convertiti
+        check_list(result)
         return result   
 
     
-    
+def check_list(list):
+    last_day = 0 
+    for item in list:
+        if last_day >= item[0]:
+            raise ExamException('lista non ordinata o duplicato')
+        last_day = item[0]
 
 def liste_giornaliere(time_series):
     #questa lista contiene altre liste che contengono le temperature relative ad un singolo giorno
-    lista = []
+    result = []
     #lista di supporto su cui memorizzo le temperature di un giorno nel for
     day = []
     first_element = time_series[0]
     #inizializzo una variabile con il primo epoch
-    curr_day = first_element[0]
+    curr_day = start_day(first_element[0])
+    
     for element in time_series:
         #aggiungo a day fino a che le temperature sono relative allo stesso giorno
         if start_day(element[0]) == curr_day:
             day.append(element[1])
         else:
             #quando si passa a un giorno successsivo aggiungo la lista day alla lista, resetto il contenuto di day e incremento il giorno corrente
-            lista.append(day)
+            if day != []:
+                result.append(day)
             day = []
             curr_day+=86400
     #aggiungo i valori dell'ultimo giorno
-    lista.append(day)
-            
+    if day != []:
+        result.append(day)     
+    return result
     
-    return lista
-
- 
-
-            
-    
-            
-    
-
-    
-
 def compute_daily_max_difference(time_series):
+    if time_series == []:
+        return None
     listegiornaliere = liste_giornaliere(time_series)
-    return [abs(max(listegiornaliere[i])-min(listegiornaliere[i])) for i in range(len(listegiornaliere))]
+    escursioni_termiche = []
+    for item in listegiornaliere:
+        if len(item) == 1:
+            escursioni_termiche.append(None)
+        else:
+            escursioni_termiche.append(abs(max(item)-min(item)))
+    return escursioni_termiche
+    
 
 
 
@@ -105,7 +117,8 @@ def start_day(epoch):
 #_______________TEST_______________________________#
 def test_start_day():
     if start_day(1553932800) != 1553904000:
-        raise ExamException('errore nel calcolo inizio del giorno')
+        raise Exception('errore nel calcolo inizio del giorno')
+ 
 
 
     
@@ -116,6 +129,6 @@ test=CSVTimeSeriesFile('data.csv')
 time_series = test.get_data()
 #print(time_series)
 print(compute_daily_max_difference(time_series))
-test_start_day()
+
 
 
