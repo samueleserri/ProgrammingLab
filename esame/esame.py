@@ -72,7 +72,7 @@ def liste_giornaliere(time_series):
     #lista di supporto su cui memorizzo le temperature di un giorno nel for
     day = []
     first_element = time_series[0]
-    #inizializzo una variabile con il primo epoch
+    #inizializzo una variabile con la mezzanotte del primo giorno
     curr_day = start_day(first_element[0])
     
     for element in time_series:
@@ -95,7 +95,7 @@ def compute_daily_max_difference(time_series):
     if type(time_series) != list:
         raise ExamException('compute_daily_max_difference prende in input una lista')
     if time_series == []:
-        return None
+       raise ExamException('lista vuota')
     listegiornaliere = liste_giornaliere(time_series)
     
     escursioni_termiche = []
