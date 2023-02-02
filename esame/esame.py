@@ -38,28 +38,25 @@ class CSVTimeSeriesFile(CSVFile):
     def get_data(self):
         lista=super().get_data()
         result = []
+    
         for item in lista:
-            lista_numerica=[]
-            for i, element in enumerate(item):
+            lista_numerica = []
+            for i,element in enumerate(item):
                 if i == 0:
                     try:
-                    #converto a int i valori epoch
                         lista_numerica.append(int(element))
                     except:
-                    #se c'è un elemento che non può essere convertito vado avanti
                         continue
                 else:
-                ##converto a float le temperature
                     try:
                         lista_numerica.append(float(element))
                     except:
-                    #vado avanti se non possono esere convertiti
                         continue
-                if len(lista_numerica)==len(item):
+                if len(lista_numerica) == 2:
                     result.append(lista_numerica)
         #return di una lista di liste con i valori convertiti
         check_list(result)
-        return result   
+        return result  
 
     
 def check_list(list):
@@ -99,6 +96,7 @@ def compute_daily_max_difference(time_series):
     if time_series == []:
         return None
     listegiornaliere = liste_giornaliere(time_series)
+    print(listegiornaliere)
     escursioni_termiche = []
     for item in listegiornaliere:
         if len(item) <= 1:
@@ -124,7 +122,8 @@ test_start_day()
 
 test=CSVTimeSeriesFile(name='data.csv')
 time_series = test.get_data()
-compute_daily_max_difference(time_series)
-
+#print(time_series)
+escursioni=compute_daily_max_difference(time_series)
+print(escursioni)
 
 
