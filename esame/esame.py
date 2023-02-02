@@ -91,12 +91,13 @@ def liste_giornaliere(time_series):
     return result
     
 def compute_daily_max_difference(time_series):
+    #se si passa qualcosa che è diverso da una lista alzo un eccezione
     if type(time_series) != list:
         raise ExamException('compute_daily_max_difference prende in input una lista')
     if time_series == []:
         return None
     listegiornaliere = liste_giornaliere(time_series)
-    print(listegiornaliere)
+    
     escursioni_termiche = []
     for item in listegiornaliere:
         if len(item) <= 1:
@@ -106,24 +107,4 @@ def compute_daily_max_difference(time_series):
     return escursioni_termiche
     
 def start_day(epoch):
-    return epoch - (epoch % 86400)  
-
-def test_start_day():
-#test calcolo giorno di inizio
-    if start_day(1553932800) != 1553904000:
-        raise Exception('errore nel calcolo inizio del giorno')
-test_start_day()
- 
-
-
-    
-    
-
-
-test=CSVTimeSeriesFile(name='data.csv')
-time_series = test.get_data()
-#print(time_series)
-escursioni=compute_daily_max_difference(time_series)
-print(escursioni)
-
-
+    return epoch - (epoch % 86400)
