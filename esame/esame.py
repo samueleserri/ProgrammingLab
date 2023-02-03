@@ -107,4 +107,4 @@ def compute_daily_max_difference(time_series):
     return escursioni_termiche
     
 def start_day(epoch):
-    return epoch - (epoch % 86400)
+    return epoch - (epoch % 86400) 
